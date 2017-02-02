@@ -123,6 +123,11 @@ static void buffer_audio(void *data, AudioQueueRef aq, AudioQueueBufferRef buf)
 
 	pthread_mutex_lock(&monitor->mutex);
 	circlebuf_push_back(&monitor->empty_buffers, &buf, sizeof(buf));
+	while (monitor->empty_buffers.size > 0) {
+		if (!fill_buffer(monitor)) {
+			break;
+		}
+	}
 	if (monitor->empty_buffers.size == sizeof(buf) * 3) {
 		monitor->paused = true;
 		monitor->wait_size = monitor->buffer_size * 3;
