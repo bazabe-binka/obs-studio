@@ -473,8 +473,6 @@ void obs_source_destroy(struct obs_source *source)
 	if (!obs_source_valid(source, "obs_source_destroy"))
 		return;
 
-	audio_monitor_destroy(source->monitor);
-
 	if (source->info.type == OBS_SOURCE_TYPE_TRANSITION)
 		obs_transition_clear(source);
 
@@ -505,6 +503,8 @@ void obs_source_destroy(struct obs_source *source)
 		source->info.destroy(source->context.data);
 		source->context.data = NULL;
 	}
+
+	audio_monitor_destroy(source->monitor);
 
 	obs_hotkey_unregister(source->push_to_talk_key);
 	obs_hotkey_unregister(source->push_to_mute_key);
