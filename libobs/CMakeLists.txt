@@ -90,6 +90,13 @@ elseif(APPLE)
 		util/platform-cocoa.m)
 	set(libobs_PLATFORM_HEADERS
 		util/threading-posix.h)
+	set(libobs_audio_monitoring_SOURCES
+		audio-monitoring/osx/coreaudio-enum-devices.c
+		audio-monitoring/osx/coreaudio-output.c
+		)
+	set(libobs_audio_monitoring_HEADERS
+		audio-monitoring/osx/mac-helpers.h
+		)
 
 	set_source_files_properties(${libobs_PLATFORM_SOURCES}
 		PROPERTIES
@@ -99,6 +106,18 @@ elseif(APPLE)
 	find_library(COCOA Cocoa)
 	mark_as_advanced(COCOA)
 	include_directories(${COCOA})
+
+	find_library(COREAUDIO CoreAudio)
+	mark_as_advanced(COREAUDIO)
+	include_directories(${COREAUDIO})
+
+	find_library(AUDIOTOOLBOX AudioToolbox)
+	mark_as_advanced(AUDIOTOOLBOX)
+	include_directories(${AUDIOTOOLBOX})
+
+	find_library(AUDIOUNIT AudioUnit)
+	mark_as_advanced(AUDIOUNIT)
+	include_directories(${AUDIOUNIT})
 
 	find_library(APPKIT AppKit)
 	mark_as_advanced(APPKIT)
@@ -114,6 +133,9 @@ elseif(APPLE)
 
 	set(libobs_PLATFORM_DEPS
 		${COCOA}
+		${COREAUDIO}
+		${AUDIOUNIT}
+		${AUDIOTOOLBOX}
 		${APPKIT}
 		${IOKIT}
 		${CARBON})
