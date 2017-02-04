@@ -66,6 +66,7 @@ static bool process_audio_delay(struct audio_monitor *monitor,
 
 	while (monitor->delay_buffer.size != 0) {
 		size_t size;
+		bool bad_diff;
 
 		circlebuf_peek_front(&monitor->delay_buffer, &cur_ts,
 				sizeof(ts));
@@ -73,9 +74,10 @@ static bool process_audio_delay(struct audio_monitor *monitor,
 			((uint64_t)pad * 1000000000ULL /
 			 (uint64_t)monitor->sample_rate);
 		diff = (int64_t)front_ts - (int64_t)last_frame_ts;
+		bad_diff = llabs(diff) > 5000000000;
 
 		/* delay audio if rushing */
-		if (diff > 75000000) {
+		if (!bad_diff && diff > 75000000) {
 			return false;
 		}
 
@@ -89,7 +91,7 @@ static bool process_audio_delay(struct audio_monitor *monitor,
 				monitor->buf.array, size);
 
 		/* cut audio if dragging */
-		if (diff < -75000000) {
+		if (!bad_diff && diff < -75000000) {
 			continue;
 		}
 
