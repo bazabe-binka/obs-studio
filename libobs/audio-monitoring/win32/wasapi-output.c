@@ -43,6 +43,8 @@ struct audio_monitor {
 	pthread_mutex_t    playback_mutex;
 };
 
+/* #define DEBUG_AUDIO */
+
 static bool process_audio_delay(struct audio_monitor *monitor,
 		float **data, uint32_t *frames, uint64_t ts, uint32_t pad)
 {
@@ -78,6 +80,13 @@ static bool process_audio_delay(struct audio_monitor *monitor,
 
 		/* delay audio if rushing */
 		if (!bad_diff && diff > 75000000) {
+#ifdef DEBUG_AUDIO
+			blog(LOG_INFO, "audio rushing, cutting audio, "
+					"diff: %lld, delay buffer size: %lu, "
+					"v: %llu: a: %llu",
+					diff, (int)monitor->delay_buffer.size,
+					last_frame_ts, front_ts);
+#endif
 			return false;
 		}
 
@@ -92,6 +101,13 @@ static bool process_audio_delay(struct audio_monitor *monitor,
 
 		/* cut audio if dragging */
 		if (!bad_diff && diff < -75000000 && monitor->delay_buffer.size > 0) {
+#ifdef DEBUG_AUDIO
+			blog(LOG_INFO, "audio dragging, cutting audio, "
+					"diff: %lld, delay buffer size: %lu, "
+					"v: %llu: a: %llu",
+					diff, (int)monitor->delay_buffer.size,
+					last_frame_ts, front_ts);
+#endif
 			continue;
 		}
 
