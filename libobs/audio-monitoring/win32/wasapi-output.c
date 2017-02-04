@@ -91,7 +91,7 @@ static bool process_audio_delay(struct audio_monitor *monitor,
 				monitor->buf.array, size);
 
 		/* cut audio if dragging */
-		if (!bad_diff && diff < -75000000) {
+		if (!bad_diff && diff < -75000000 && monitor->delay_buffer.size > 0) {
 			continue;
 		}
 
