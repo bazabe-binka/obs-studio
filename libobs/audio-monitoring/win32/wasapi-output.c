@@ -282,10 +282,6 @@ static bool audio_monitor_init(struct audio_monitor *monitor)
 	to.format = AUDIO_FORMAT_FLOAT;
 
 	monitor->sample_rate = (uint32_t)wfex->nSamplesPerSec;
-#ifdef ENABLE_CORRECTION
-	monitor->peak_frames = monitor->sample_rate * 75 / 1000;
-	monitor->correction_frames = monitor->sample_rate * 5;
-#endif
 	monitor->channels = wfex->nChannels;
 	monitor->resampler = audio_resampler_create(&to, &from);
 	if (!monitor->resampler) {
