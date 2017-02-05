@@ -92,6 +92,7 @@ OBSAdvAudioCtrl::OBSAdvAudioCtrl(QGridLayout *layout, obs_source_t *source_)
 	syncOffset->setMaximum(20000);
 	syncOffset->setValue(int(cur_sync / NSEC_PER_MSEC));
 
+	int idx;
 #if defined(_WIN32) || defined(__APPLE__)
 	monitoringType->addItem(QTStr("Basic.AdvAudio.Monitoring.None"),
 			(int)OBS_MONITORING_TYPE_NONE);
@@ -100,7 +101,7 @@ OBSAdvAudioCtrl::OBSAdvAudioCtrl(QGridLayout *layout, obs_source_t *source_)
 	monitoringType->addItem(QTStr("Basic.AdvAudio.Monitoring.Both"),
 			(int)OBS_MONITORING_TYPE_MONITOR_AND_OUTPUT);
 	int mt = (int)obs_source_get_monitoring_type(source);
-	int idx = monitoringType->findData(mt);
+	idx = monitoringType->findData(mt);
 	monitoringType->setCurrentIndex(idx);
 #endif
 
