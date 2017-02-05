@@ -147,6 +147,9 @@ elseif(UNIX)
 		util/platform-nix.c)
 	set(libobs_PLATFORM_HEADERS
 		util/threading-posix.h)
+	set(libobs_audio_monitoring_SOURCES
+		audio-monitoring/null/null-audio-monitoring.c
+		)
 
 	if(DBUS_FOUND)
 		set(libobs_PLATFORM_SOURCES ${libobs_PLATFORM_SOURCES}

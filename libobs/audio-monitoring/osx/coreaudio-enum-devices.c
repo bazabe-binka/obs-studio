@@ -87,7 +87,6 @@ void obs_enum_audio_monitoring_devices(obs_enum_audio_device_cb cb, void *data)
 
 	stat = AudioObjectGetPropertyData(kAudioObjectSystemObject, &addr,
 						0, NULL, &size, ids);
-
 	if (success(stat, "get data")) {
 		for (UInt32 i = 0; i < count; i++)
 			obs_enum_audio_monitoring_device(cb, data, ids[i]);

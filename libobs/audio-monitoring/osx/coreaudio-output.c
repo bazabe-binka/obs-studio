@@ -26,7 +26,6 @@ struct audio_monitor {
 	uint32_t              channels;
 
 	volatile bool         active;
-	bool                  source_has_video;
 	bool                  paused;
 
 	struct circlebuf      delay_buffer;
@@ -44,7 +43,9 @@ static inline bool fill_buffer(struct audio_monitor *monitor)
 	circlebuf_pop_front(&monitor->empty_buffers, &buf, sizeof(buf));
 	circlebuf_pop_front(&monitor->new_data, buf->mAudioData,
 			monitor->buffer_size);
+
 	buf->mAudioDataByteSize = monitor->buffer_size;
+
 	stat = AudioQueueEnqueueBuffer(monitor->queue, buf, 0, NULL);
 	if (!success(stat, "AudioQueueEnqueueBuffer")) {
 		blog(LOG_WARNING, "%s: %s", __FUNCTION__,
@@ -271,8 +272,6 @@ static void audio_monitor_init_final(struct audio_monitor *monitor,
 		obs_source_t *source)
 {
 	monitor->source = source;
-	monitor->source_has_video =
-		(source->info.output_flags & OBS_SOURCE_VIDEO) != 0;
 	obs_source_add_audio_capture_callback(source, on_audio_playback,
 			monitor);
 }
