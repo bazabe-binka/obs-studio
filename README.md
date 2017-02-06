@@ -1,19 +1,23 @@
 
-What is OBS?
+What is [OBS Studio](https://projectobs.com/en/download/)?
 
+  Free and open source software for video recording and live streaming.
+  
   This project is a rewrite of what was formerly known as "Open Broadcaster
   Software", software originally designed for recording and streaming live
   video content, efficiently.
-
-Bug Tracker: https://obsproject.com/mantis/
-
-   We are no longer using GitHub issues!  Please use Mantis, and only report
-   bugs and major issues.  Do NOT use mantis to ask questions or request
-   features, please keep that to the forums.
-
-   Forum accounts are now linked to Mantis Bug Tracker.  To use the bug
-   tracker, simply log in to the forums and then go to the bug tracker link
-   above.
+  
+  Features
+  
+  - High performance real time video/audio capturing and mixing, with unlimited scenes you can switch between seamlessly via custom transitions.
+  - Filters for video sources such as image masking, color correction, chroma/color keying, and more.
+  - Intuitive audio mixer with filter functionality such as noise gate, noise suppression, and gain.
+  - Powerful and easy to use configuration options. Add new Sources, duplicate existing ones, and adjust their properties effortlessly.
+  - Improved and streamlined Settings panel for quickly configuring your broadcasts and recordings.
+  - Both light and dark themes available to fit your preference
+  
+  OBS has been rebuilt from the ground up to be even more lightweight and high performance than before.
+It supports all your favorite streaming platforms and more.
 
 What's the goal of rewriting OBS?
 
@@ -148,7 +152,6 @@ What was wrong with the original OBS?
     - Bad formatting.  Code could go beyond 200 columns in some cases, making
       it very unpleasant to read with many editors.  Spaces instead of tabs,
       K&R mixed with allman (which was admittedly my fault).
-
 
 New (actual) coding guidelines
 
